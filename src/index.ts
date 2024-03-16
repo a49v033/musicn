@@ -1,13 +1,16 @@
 import command from './command'
 import choose from './choose'
-import search from './search'
-import bulkDownload from './bulkDownload'
-import { SongInfo } from './types'
+import searchMusic from './searchMusic'
+import download from './download'
+import qrcodeGenerator from './qrcode'
+import type { SongInfo, CommandOptions } from './types'
 
-const download = async () => {
-  const result = await search(<SongInfo>command)
-  const songs = await choose(<SongInfo>result)
-  await bulkDownload(songs as SongInfo[])
-}
-
-export default download
+!(async () => {
+  const { options } = command
+  if (options.qrcode) {
+    return await qrcodeGenerator(options as CommandOptions)
+  }
+  const result = await searchMusic(<SongInfo>command)
+  const { songs = [] } = await choose(<SongInfo>result)
+  await download(songs)
+})()

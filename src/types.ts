@@ -1,5 +1,6 @@
 export interface Artist {
   name: string
+  img1v1Url?: string
 }
 
 export interface RateFormat {
@@ -11,29 +12,68 @@ export interface RateFormat {
   androidUrl: string
 }
 
+interface MiguImgType {
+  imgSizeType: string
+  img: string
+}
+
+export type ServiceType = 'migu' | 'kuwo' | 'wangyi' | 'kugou'
+
 export interface CommandOptions {
-  lyric?: string
+  lyric?: boolean
   path?: string
-  service: string
   number: string
+  size: string
+  kugou?: boolean
+  kuwo?: boolean
+  wangyi?: boolean
+  migu?: boolean
+  qrcode: boolean
+  port?: string
+  songListId: string
+  service: ServiceType
+  open?: boolean
+  base?: string
 }
 
 export interface SearchSongInfo {
-  id: string
-  contentId: string
-  copyrightId: string
+  id?: string
+  contentId?: string
+  copyrightId?: string
   url: string
   size: number
-  extension: string
   name: string
-  lyricUrl: string
-  DC_TARGETID: string
+  songName: string
+  lyricUrl?: string
+  DC_TARGETID?: string
   NAME: string
+  disabled?: boolean
+  hash?: string
+  filename: string
+  fileSize: number
   ARTIST: string
+  artist: string
+  cover: string
   artists: Artist[]
   singers: Artist[]
-  newRateFormats: RateFormat[]
-  rateFormats: RateFormat[]
+  ar: Artist[]
+  lrc?: string
+  newRateFormats?: RateFormat[]
+  rateFormats?: RateFormat[]
+  imgItems: MiguImgType[]
+}
+
+export interface SearchProps {
+  text: string
+  pageNum: string
+  pageSize: string
+  songListId?: string
+}
+
+export interface NamesProps {
+  song: SearchSongInfo
+  index: number
+  options: CommandOptions
 }
 
 export interface SongInfo {
